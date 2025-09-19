@@ -36,13 +36,19 @@
         "GUID:d04eb9c554ad44ceab303cecf0c0cf82",
         "GUID:21b0c8d1703a94250bfac916590cea4f",
         "GUID:343deaaf83e0cee4ca978e7df0b80d21",
-        "GUID:2bafac87e7f4b9b418d9448d219b01ab"
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:deb18a2759c17104993ad02a73fa5306"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "R3.dll",
+        "ObservableCollections.dll",
+        "ObservableCollections.R3.dll",
+        "ZLinq.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
