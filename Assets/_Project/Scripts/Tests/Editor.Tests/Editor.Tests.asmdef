@@ -1,0 +1,42 @@
+{
+    "name": "Editor.Tests",
+    "rootNamespace": "",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "NaughtyAttributes.Test",
+        "PrimeTween.Tests",
+        "PrimeTween.Tests.Editor",
+        "TNRD.NSubstitute",
+        "Unity.Addressables.Editor.Tests",
+        "Unity.AI.Navigation.LegacyOffMeshLink.Tests",
+        "Unity.AI.Navigation.Tests",
+        "Unity.Collections.Tests",
+        "Unity.Mathematics.Tests",
+        "Unity.ResourceManager.Tests",
+        "UnityEditor.UI.EditorTests",
+        "UnityEngine.UI.Tests",
+        "Unity.TextMeshPro.Tests",
+        "Architecture",
+        "R3.Unity"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "ObservableCollections.dll",
+        "R3.dll",
+        "ObservableCollections.R3.dll",
+        "ZLinq.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
