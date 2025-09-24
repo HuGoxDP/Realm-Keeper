@@ -1,11 +1,10 @@
 ﻿using System;
-using Architecture._Project.Scripts.Architecture;
 using R3;
 using Reflex.Attributes;
 using Unity.Cinemachine;
 using UnityEngine;
 
-namespace Architecture._Project.Scripts.Architecture.Camera
+namespace Architecture.Camera
 {
     public class CameraController : MonoBehaviour, IDisposable
     {
@@ -39,28 +38,21 @@ namespace Architecture._Project.Scripts.Architecture.Camera
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
 
         [Inject]
-        private void Construct(ICameraInputService cameraInputService)
+        private void Construct(ICameraInputService cameraInputService, UnityEngine.Camera camera)
         {
             _cameraInputSystem = cameraInputService;
+            _camera = camera;
+
+            if (_camera == null)
+                throw new Exception("CameraController : Camera not initialized");
             
             if (_cameraInputSystem == null)
-            {
-                throw new NullReferenceException("Camera input service is null.");
-            }
+                throw new NullReferenceException("CameraController : Camera input service is null.");
             
             _cameraInputSystem.MoveDirection.Subscribe(x => moveInput = x).AddTo(_disposable);
             _cameraInputSystem.ScrollWheel.Subscribe(x => zoomInput = x).AddTo(_disposable);
         }
         
-        private void Awake()
-        {
-            _camera = UnityEngine.Camera.main;
-            if (_camera == null)
-            {
-                throw new NullReferenceException("Main camera is null.");
-            }
-        }
-
         private void OnDestroy()
         {
             Dispose();

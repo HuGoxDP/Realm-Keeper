@@ -43,7 +43,9 @@ namespace Architecture
             
             _actions.Camera.ScrollWheel.performed -= OnScrollWheel;
             _actions.Camera.ScrollWheel.canceled -= OnScrollWheel;
-
+            
+            _moveDirection?.Dispose();
+            _scrollWheel?.Dispose();
             _actions.Camera.Disable();
         }
 
