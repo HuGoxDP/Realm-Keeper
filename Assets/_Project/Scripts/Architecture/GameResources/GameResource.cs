@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Architecture._Project.Scripts.Architecture.GameResources
+namespace Architecture.GameResources
 {
     public interface IGameResource
     {

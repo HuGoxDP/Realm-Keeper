@@ -3,7 +3,7 @@ using R3;
 using Reflex.Attributes;
 using UnityEngine;
 
-namespace Architecture._Project.Scripts.Architecture.GameResources
+namespace Architecture.GameResources
 {
     public class GameResourceUIHandler : MonoBehaviour, IDisposable
     {

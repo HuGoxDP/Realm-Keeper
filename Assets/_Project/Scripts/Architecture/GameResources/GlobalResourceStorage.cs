@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using R3;
 using UnityEngine;
 using ZLinq;
 
-namespace Architecture._Project.Scripts.Architecture.GameResources
+namespace Architecture.GameResources
 {
     public interface IGlobalResourceStorage
     { 

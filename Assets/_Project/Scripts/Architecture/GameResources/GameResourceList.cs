@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace Architecture._Project.Scripts.Architecture.GameResources
+namespace Architecture.GameResources
 {
     public interface IGameResourceList
     {
