@@ -15,12 +15,12 @@ namespace Architecture.FSM
             if (transition != null)
                 ChangeState(transition.To);
             
-            _current.State?.Update();
+            _current?.State?.Update();
         }
 
         public void FixedUpdate()
         {
-            _current.State?.FixedUpdate();
+            _current?.State?.FixedUpdate();
         }
 
         public void SetState(IState state)
@@ -73,12 +73,16 @@ namespace Architecture.FSM
                 if (transition.Condition.Evaluate())
                     return transition;
             }
+
+            if (_current?.Transitions == null)
+                return null;
             
             foreach (var transition in _current.Transitions)
             {
                 if (transition.Condition.Evaluate())
                     return transition;
             }
+            
 
             return null;
         }

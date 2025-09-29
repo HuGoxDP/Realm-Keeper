@@ -1,4 +1,5 @@
 ﻿using System;
+using Architecture.Units.Components;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,6 +28,10 @@ namespace Architecture.Units
             
             if (_healthComponent == null)
                 throw new ArgumentNullException(nameof(_healthComponent), "BaseUnit : HealthComponent cannot be null");
+            
+            var context = new UnitContext(this, _healthComponent, _movementComponent);
+            var unitStateMachine = GetComponent<UnitStateMachine>();
+            unitStateMachine.Initialize(context);
         }
 
         private void OnEnable()
@@ -43,13 +48,12 @@ namespace Architecture.Units
 
         private void OnDestroy()
         {
-            _movementComponent.Dispose();
-            _healthComponent.Dispose();
+            _movementComponent?.Dispose();
+            _healthComponent?.Dispose();
         }
 
-        public void Heal(int amount) => _healthComponent?.Heal(amount);
         
-        public void TakeDamage(int damage) => _healthComponent?.TakeDamage(damage);
+        public void ApplyDamage(int damage) => _healthComponent?.ApplyDamage(damage);
         public void MoveTo(Vector3 position) => _movementComponent?.MoveTo(position);
 
         public void Stop() => _movementComponent?.Stop();

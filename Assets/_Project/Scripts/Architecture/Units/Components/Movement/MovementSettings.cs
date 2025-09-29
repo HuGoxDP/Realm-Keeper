@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Architecture.Units
+namespace Architecture.Units.Components
 {
     [Serializable]
     public struct MovementSettings

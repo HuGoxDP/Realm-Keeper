@@ -3,15 +3,8 @@ using R3;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Architecture.Units
+namespace Architecture.Units.Components
 {
-    public interface IMovementComponent : IComponent, IDisposable
-    {
-        void MoveTo(Vector3 position);
-        void MoveTo(Transform target);
-        void Stop();
-    }
-    
     public class MovementComponent : IMovementComponent
     {
         private readonly NavMeshAgent _navMeshAgent;
@@ -26,8 +19,6 @@ namespace Architecture.Units
             
             SetupNavMeshAgent(movementSettings);
         }
-        
-        ~MovementComponent() => Dispose();
         
         public void Enable()
         {

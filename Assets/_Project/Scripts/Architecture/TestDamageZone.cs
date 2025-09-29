@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Architecture
 {
     public class TestDamageZone : MonoBehaviour
-    {
-        private void OnCollisionEnter(Collision other)
+    { 
+        private void OnTriggerEnter(Collider other)
         {
             var baseUnit = other.gameObject.GetComponent<BaseUnit>();
             if (baseUnit != null)
             {
-                baseUnit.TakeDamage(10);
+                baseUnit.ApplyDamage(10);
             }
         }
     }
