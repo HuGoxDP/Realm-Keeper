@@ -1,5 +1,4 @@
-﻿using System;
-using Architecture.Units;
+﻿using Architecture.Units;
 using UnityEngine;
 
 namespace Architecture

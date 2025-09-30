@@ -28,7 +28,6 @@ namespace Architecture
                 var ray = _camera.ScreenPointToRay(position);
                 if (!Physics.Raycast(ray.origin, ray.direction, out _hitInfo, 100, _clickableLayerMask)) return;
                 
-                Debug.Log($"Moving unit to {_hitInfo.point}");
                 _unit.MoveTo(_hitInfo.point);
             }).AddTo(_disposables);
             

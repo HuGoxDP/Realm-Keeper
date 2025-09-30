@@ -1,5 +1,5 @@
-﻿using System;
-using Architecture.Units.Components;
+﻿using Architecture.Units.Components;
+using Architecture.Units.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,20 +16,19 @@ namespace Architecture.Units
 
         private IMovementComponent _movementComponent;
         private IHealthComponent _healthComponent;
+        
+        private MovementData _movementData;
+
 
         private void Awake()
         {
+            _movementData = new MovementData();
+            
             _movementComponent = new MovementComponent(_navMeshAgent, _movementSettings);
             _healthComponent = new HealthComponent(_maxHealth);
             
             
-            if (_movementComponent == null)
-                throw new ArgumentNullException(nameof(_movementComponent), "BaseUnit : MovementComponent cannot be null");
-            
-            if (_healthComponent == null)
-                throw new ArgumentNullException(nameof(_healthComponent), "BaseUnit : HealthComponent cannot be null");
-            
-            var context = new UnitContext(this, _healthComponent, _movementComponent);
+            var context = new UnitContext(this, _movementData, _healthComponent, _movementComponent);
             var unitStateMachine = GetComponent<UnitStateMachine>();
             unitStateMachine.Initialize(context);
         }
@@ -49,13 +48,15 @@ namespace Architecture.Units
         private void OnDestroy()
         {
             _movementComponent?.Dispose();
-            _healthComponent?.Dispose();
         }
 
-        
-        public void ApplyDamage(int damage) => _healthComponent?.ApplyDamage(damage);
-        public void MoveTo(Vector3 position) => _movementComponent?.MoveTo(position);
+        public void MoveTo(Vector3 position) => _movementData.SetTarget(position);
+        public void Chase(Transform target) => _movementData.SetTarget(target.position);
+        public void Stop() => _movementData.Clear();
+        public void ApplyDamage(int damage) => _healthComponent?.TakeDamage(damage);
+        public void Heal(int amount) => _healthComponent?.Heal(amount);
+        public void Kill() => _healthComponent?.Kill();
+        public void Reset() => _healthComponent?.Reset();
 
-        public void Stop() => _movementComponent?.Stop();
     }
 }

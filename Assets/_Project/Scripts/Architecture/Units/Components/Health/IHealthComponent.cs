@@ -1,14 +1,14 @@
-﻿using System;
-using R3;
-using UnityEngine;
-
-namespace Architecture.Units.Components
+﻿namespace Architecture.Units.Components
 {
-    public interface IHealthComponent : IComponent, IDisposable
+    public interface IHealthComponent : IComponent
     {
-        ReactiveProperty<int> Health { get; }
+        int CurrentHealth { get; }
+        int MaxHealth { get; }
         bool IsDead { get; }
         
-        void ApplyDamage(int amount);
+        void TakeDamage(int amount);
+        void Heal(int amount);
+        void Kill();
+        void Reset();
     }
 }

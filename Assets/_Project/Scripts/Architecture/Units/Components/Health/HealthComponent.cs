@@ -1,24 +1,23 @@
 ﻿using System;
-using R3;
+using UnityEngine;
 
 namespace Architecture.Units.Components
 {
     public class HealthComponent : IHealthComponent
-    {
-        public ReactiveProperty<int> Health { get; }
-        public bool IsDead { get; private set;}
-
-        private readonly int _maxHealth;
+    { 
+        public int CurrentHealth { get; private set;}
+        public int MaxHealth { get; private set; }
+        public bool IsDead => CurrentHealth <= 0;
+        
         private bool _isEnabled;
-
+        
         public HealthComponent(int maxHealth)
         {
             if (maxHealth <= 0)
-                throw new ArgumentOutOfRangeException(nameof(maxHealth), "HealthComponent : maxHealth must be greater than zero");
-
-            _maxHealth = maxHealth;
-
-            Health = new ReactiveProperty<int>(maxHealth);
+                throw new ArgumentException("MaxHealth must be positive", nameof(maxHealth));
+            
+            MaxHealth = maxHealth;
+            CurrentHealth = maxHealth;
         }
         
         public void Enable()
@@ -30,26 +29,29 @@ namespace Architecture.Units.Components
         {
             _isEnabled = false;
         }
-
-        public void Dispose()
+        
+        public void TakeDamage(int amount)
         {
-            Health?.Dispose();
+            if (IsDead || amount <= 0 || !_isEnabled) return;
+            
+            CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         }
 
-        public void ApplyDamage(int amount)
+        public void Heal(int amount)
         {
-            if (IsDead || !_isEnabled)
-                return;
+            if (IsDead || amount <= 0 || !_isEnabled) return;
+            
+            CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + amount);
+        }
 
-            if (amount <= 0)
-                throw new ArgumentOutOfRangeException(nameof(amount), "HealthComponent : damage must be greater than zero");
+        public void Kill()
+        {
+            CurrentHealth = 0;
+        }
 
-            if (Health.Value - amount <= 0)
-            {
-                IsDead = true;
-            }
-
-            Health.Value = Math.Max(Health.Value - amount, 0);
+        public void Reset()
+        {
+            CurrentHealth = MaxHealth;
         }
     }
 }

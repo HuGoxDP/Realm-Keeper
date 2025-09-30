@@ -11,22 +11,27 @@ namespace Architecture.FSM
 
         public void Update()
         {
+            if (_current == null) return;
+            
             var transition = GetTransition();
             if (transition != null)
                 ChangeState(transition.To);
             
-            _current?.State?.Update();
+            _current.State?.Update();
         }
 
         public void FixedUpdate()
         {
-            _current?.State?.FixedUpdate();
+            if (_current == null) return;
+            
+            _current.State?.FixedUpdate();
         }
 
         public void SetState(IState state)
         {
-            _current = _nodes[state.GetType()];
-            _current.State.OnEnter();
+            var node = GetOrAddNode(state);
+            _current = node;
+            _current.State?.OnEnter();
         }
 
         public void AddTransition(IState from, IState to, IPredicate condition)
@@ -42,12 +47,11 @@ namespace Architecture.FSM
         
         private StateNode GetOrAddNode(IState state)
         {
-            var node = _nodes.GetValueOrDefault(state.GetType());
-
-            if (node == null)
+            var stateType = state.GetType();
+            if (!_nodes.TryGetValue(stateType, out var node))
             {
                 node = new StateNode(state);
-                _nodes.Add(state.GetType(), node);
+                _nodes.Add(stateType, node);
             }
             
             return node;
@@ -55,34 +59,32 @@ namespace Architecture.FSM
         
         private void ChangeState(IState state)
         {
-            if (state == _current.State)
+            if (state == _current?.State)
                 return;
             
-            var previousState = _current.State;
-            var nextState = _nodes[state.GetType()].State;
+            var previousState = _current?.State;
+            var nextStateNode = GetOrAddNode(state);
             
-            previousState.OnExit();
-            nextState.OnEnter();
-            _current = _nodes[state.GetType()];
+            previousState?.OnExit();
+            nextStateNode.State?.OnEnter();
+            _current = nextStateNode;
         }
         
         private ITransition GetTransition()
         {
+            if (_current == null) return null;
+            
             foreach (var transition in _anyTransitions)
             {
                 if (transition.Condition.Evaluate())
                     return transition;
             }
-
-            if (_current?.Transitions == null)
-                return null;
             
             foreach (var transition in _current.Transitions)
             {
                 if (transition.Condition.Evaluate())
                     return transition;
             }
-            
 
             return null;
         }
@@ -95,12 +97,15 @@ namespace Architecture.FSM
             
             public StateNode(IState state)
             {
-                State = state;
+                State = state ?? throw new ArgumentNullException(nameof(state));
                 Transitions = new HashSet<ITransition>();
             }
             
             public void AddTransition(IState to, IPredicate condition)
             {
+                if (to == null) throw new ArgumentNullException(nameof(to));
+                if (condition == null) throw new ArgumentNullException(nameof(condition));
+                
                 Transitions.Add(new Transition(to, condition));
             }
         }

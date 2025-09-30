@@ -1,6 +1,4 @@
-﻿using System;
-using Architecture.FSM;
-using Architecture.Units.Components;
+﻿using Architecture.FSM;
 using Architecture.Units.State;
 using UnityEngine;
 
@@ -18,8 +16,14 @@ namespace Architecture.Units
 
         public void Initialize(UnitContext context)
         {
-           // _context = context;
-            //InitializeStates();
+            if (context == null)
+            {
+                Debug.LogError("UnitStateMachine: Context is null!");
+                return;
+            }
+
+            _context = context;
+            InitializeStates();
         }
 
         private void Update()
@@ -34,16 +38,18 @@ namespace Architecture.Units
 
         private void InitializeStates()
         {
-            //var idleState = new IdleUnitState(_context.MovementComponent);
-            //var moveState = new MoveUnitState(_context.MovementComponent);
-            //var deadState = new DeadUnitState(_context.MovementComponent);
+            var idleState = new IdleUnitState(_context);
+            var moveState = new MoveUnitState(_context);
+            var chaseState = new ChaseUnitState(_context);
+            var deadState = new DeadUnitState(_context);
 
-            //_fsm.AddTransition(idleState, moveState, new FuncPredicate(() => _context.MovementComponent.TargetPosition.CurrentValue == null));
-           // _fsm.AddTransition(moveState, idleState, new FuncPredicate(() => _context.MovementComponent.TargetPosition.CurrentValue != null));
-            //_fsm.AddAnyTransition(deadState, new FuncPredicate(() => _context.HealthComponent.isDead));
+            _fsm.AddTransition(idleState, moveState, new FuncPredicate(() => _context.MovementData.TargetPosition.HasValue));
+            _fsm.AddTransition(idleState, chaseState, new FuncPredicate(() => _context.MovementData.TargetTransform != null));
+            _fsm.AddTransition(moveState, idleState, new FuncPredicate(() => !_context.MovementData.HasMoveCommand));
+            _fsm.AddTransition(chaseState, idleState, new FuncPredicate(() => !_context.MovementData.HasMoveCommand));
+            _fsm.AddAnyTransition(deadState, new FuncPredicate(() => _context.HealthComponent.IsDead));
             
-            //_fsm.SetState(idleState);
+            _fsm.SetState(idleState);
         }
-
     }
 }
