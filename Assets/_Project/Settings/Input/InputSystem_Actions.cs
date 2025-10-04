@@ -109,6 +109,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""97b50406-581b-4299-8bac-ecf8b48108db"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shift"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""1b7938f6-d66f-4228-9902-f38c60d840a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -164,6 +182,50 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ce898e8-3cf3-41de-9ffe-b50010d527c8"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ae7056f-0b43-4bfe-8f64-a2add20ae154"",
+                    ""path"": ""<Pen>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37043f76-ebfc-49e5-ad3a-058e2e13fc61"",
+                    ""path"": ""<Touchscreen>/touch*/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c59a0e3c-5599-4f97-a1e8-778bbc5a7bec"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Shift"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -385,15 +447,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Sprint"",
-                    ""type"": ""Button"",
-                    ""id"": ""f28117b8-a9e4-4e85-8ab0-ddac19897f11"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""1fa4da27-15ca-40f8-953a-87adcfc6d7e6"",
@@ -424,15 +477,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""f090596a-9767-4ac3-8332-35768f682ce9"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Point"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""70696904-27ce-4bd3-b37c-336c0bedb93a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -617,39 +661,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7a9c20be-f052-43eb-83c8-1284642b9c02"",
-                    ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a3bb44db-5d81-4b53-9114-c0949343b5ee"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b508de26-7e72-417b-b75b-bd7da94d8951"",
-                    ""path"": ""<XRController>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Sprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""41c349c4-d40e-40cf-89f5-1f652124eec9"",
                     ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
@@ -755,39 +766,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Joystick"",
                     ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0b8c403f-5213-4c96-8296-b37fe3da462e"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3106745e-e4b8-40c6-8b02-7ce5d626a105"",
-                    ""path"": ""<Pen>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d47882ed-adbd-4ad0-a372-9271fffdc2d1"",
-                    ""path"": ""<Touchscreen>/touch*/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
-                    ""action"": ""Point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1129,50 +1107,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Gamepad"",
-            ""bindingGroup"": ""Gamepad"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Gamepad>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Touch"",
-            ""bindingGroup"": ""Touch"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Touchscreen>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Joystick"",
-            ""bindingGroup"": ""Joystick"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Joystick>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""XR"",
-            ""bindingGroup"": ""XR"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<XRController>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
         }
     ]
 }");
@@ -1180,6 +1114,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
+        m_Player_Shift = m_Player.FindAction("Shift", throwIfNotFound: true);
         // Camera
         m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
         m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
@@ -1192,12 +1128,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Other_Attack = m_Other.FindAction("Attack", throwIfNotFound: true);
         m_Other_Crouch = m_Other.FindAction("Crouch", throwIfNotFound: true);
         m_Other_Previous = m_Other.FindAction("Previous", throwIfNotFound: true);
-        m_Other_Sprint = m_Other.FindAction("Sprint", throwIfNotFound: true);
         m_Other_Next = m_Other.FindAction("Next", throwIfNotFound: true);
         m_Other_Interact = m_Other.FindAction("Interact", throwIfNotFound: true);
         m_Other_Jump = m_Other.FindAction("Jump", throwIfNotFound: true);
         m_Other_Look = m_Other.FindAction("Look", throwIfNotFound: true);
-        m_Other_Point = m_Other.FindAction("Point", throwIfNotFound: true);
         m_Other_TrackedDeviceOrientation = m_Other.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         m_Other_TrackedDevicePosition = m_Other.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_Other_MiddleClick = m_Other.FindAction("MiddleClick", throwIfNotFound: true);
@@ -1289,6 +1223,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Click;
     private readonly InputAction m_Player_RightClick;
+    private readonly InputAction m_Player_MousePosition;
+    private readonly InputAction m_Player_Shift;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1308,6 +1244,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/RightClick".
         /// </summary>
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MousePosition".
+        /// </summary>
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Shift".
+        /// </summary>
+        public InputAction @Shift => m_Wrapper.m_Player_Shift;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1340,6 +1284,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+            @Shift.started += instance.OnShift;
+            @Shift.performed += instance.OnShift;
+            @Shift.canceled += instance.OnShift;
         }
 
         /// <summary>
@@ -1357,6 +1307,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+            @Shift.started -= instance.OnShift;
+            @Shift.performed -= instance.OnShift;
+            @Shift.canceled -= instance.OnShift;
         }
 
         /// <summary>
@@ -1590,12 +1546,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Other_Attack;
     private readonly InputAction m_Other_Crouch;
     private readonly InputAction m_Other_Previous;
-    private readonly InputAction m_Other_Sprint;
     private readonly InputAction m_Other_Next;
     private readonly InputAction m_Other_Interact;
     private readonly InputAction m_Other_Jump;
     private readonly InputAction m_Other_Look;
-    private readonly InputAction m_Other_Point;
     private readonly InputAction m_Other_TrackedDeviceOrientation;
     private readonly InputAction m_Other_TrackedDevicePosition;
     private readonly InputAction m_Other_MiddleClick;
@@ -1630,10 +1584,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Previous => m_Wrapper.m_Other_Previous;
         /// <summary>
-        /// Provides access to the underlying input action "Other/Sprint".
-        /// </summary>
-        public InputAction @Sprint => m_Wrapper.m_Other_Sprint;
-        /// <summary>
         /// Provides access to the underlying input action "Other/Next".
         /// </summary>
         public InputAction @Next => m_Wrapper.m_Other_Next;
@@ -1649,10 +1599,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Other/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_Other_Look;
-        /// <summary>
-        /// Provides access to the underlying input action "Other/Point".
-        /// </summary>
-        public InputAction @Point => m_Wrapper.m_Other_Point;
         /// <summary>
         /// Provides access to the underlying input action "Other/TrackedDeviceOrientation".
         /// </summary>
@@ -1715,9 +1661,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Previous.started += instance.OnPrevious;
             @Previous.performed += instance.OnPrevious;
             @Previous.canceled += instance.OnPrevious;
-            @Sprint.started += instance.OnSprint;
-            @Sprint.performed += instance.OnSprint;
-            @Sprint.canceled += instance.OnSprint;
             @Next.started += instance.OnNext;
             @Next.performed += instance.OnNext;
             @Next.canceled += instance.OnNext;
@@ -1730,9 +1673,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @Point.started += instance.OnPoint;
-            @Point.performed += instance.OnPoint;
-            @Point.canceled += instance.OnPoint;
             @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
@@ -1774,9 +1714,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Previous.started -= instance.OnPrevious;
             @Previous.performed -= instance.OnPrevious;
             @Previous.canceled -= instance.OnPrevious;
-            @Sprint.started -= instance.OnSprint;
-            @Sprint.performed -= instance.OnSprint;
-            @Sprint.canceled -= instance.OnSprint;
             @Next.started -= instance.OnNext;
             @Next.performed -= instance.OnNext;
             @Next.canceled -= instance.OnNext;
@@ -1789,9 +1726,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @Point.started -= instance.OnPoint;
-            @Point.performed -= instance.OnPoint;
-            @Point.canceled -= instance.OnPoint;
             @TrackedDeviceOrientation.started -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.performed -= instance.OnTrackedDeviceOrientation;
             @TrackedDeviceOrientation.canceled -= instance.OnTrackedDeviceOrientation;
@@ -1856,58 +1790,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
         }
     }
-    private int m_GamepadSchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme GamepadScheme
-    {
-        get
-        {
-            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
-            return asset.controlSchemes[m_GamepadSchemeIndex];
-        }
-    }
-    private int m_TouchSchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme TouchScheme
-    {
-        get
-        {
-            if (m_TouchSchemeIndex == -1) m_TouchSchemeIndex = asset.FindControlSchemeIndex("Touch");
-            return asset.controlSchemes[m_TouchSchemeIndex];
-        }
-    }
-    private int m_JoystickSchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme JoystickScheme
-    {
-        get
-        {
-            if (m_JoystickSchemeIndex == -1) m_JoystickSchemeIndex = asset.FindControlSchemeIndex("Joystick");
-            return asset.controlSchemes[m_JoystickSchemeIndex];
-        }
-    }
-    private int m_XRSchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme XRScheme
-    {
-        get
-        {
-            if (m_XRSchemeIndex == -1) m_XRSchemeIndex = asset.FindControlSchemeIndex("XR");
-            return asset.controlSchemes[m_XRSchemeIndex];
-        }
-    }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -1929,6 +1811,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMousePosition(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Shift" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShift(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Camera" which allows adding and removing callbacks.
@@ -1996,13 +1892,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPrevious(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSprint(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "Next" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -2030,13 +1919,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPoint(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "TrackedDeviceOrientation" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

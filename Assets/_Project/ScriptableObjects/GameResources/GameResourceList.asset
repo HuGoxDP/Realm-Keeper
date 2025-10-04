@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83e68982d3d447087e0e473fd3a7934, type: 3}
   m_Name: GameResourceList
   m_EditorClassIdentifier: 
-  <List>k__BackingField:
+  _list:
   - {fileID: 11400000, guid: 294a8310f68fe2e4c8993a4ab9347628, type: 2}
