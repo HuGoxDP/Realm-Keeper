@@ -1,4 +1,5 @@
 ﻿using System;
+using Architecture.Units.Core;
 using UnityEngine;
 
 namespace Architecture.Units.Components

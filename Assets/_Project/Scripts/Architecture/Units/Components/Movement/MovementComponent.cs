@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Architecture.Units.Configs;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Architecture.Units.Components
@@ -66,6 +67,7 @@ namespace Architecture.Units.Components
             {
                 _navMeshAgent.ResetPath();
             }
+            _navMeshAgent.velocity = Vector3.zero;
         }
         
         /// <summary>

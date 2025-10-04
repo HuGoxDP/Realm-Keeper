@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Architecture.Units.Core;
+using UnityEngine;
 
 namespace Architecture.Units.State
 {
@@ -8,10 +9,13 @@ namespace Architecture.Units.State
 
         public override void OnEnter()
         { 
-            Debug.Log("[Idle] Entering Idle State");
-            
             Context.MovementComponent.StopMoving();
             Context.MovementData.Clear();
+        }
+
+        public override void Update()
+        {
+             Context.MovementComponent.StopMoving();
         }
     }
 }

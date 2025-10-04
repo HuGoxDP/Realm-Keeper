@@ -1,34 +1,49 @@
-﻿using UnityEngine;
+﻿using Architecture.Units.Core;
+using UnityEngine;
 
 namespace Architecture.Units.State
 {
     public class MoveUnitState : BaseUnitState
     {
+        private float _updateInterval = 0.2f;
+        private float _timer;
+        
         public MoveUnitState(UnitContext context) : base(context) { }
 
         public override void OnEnter()
         {
-            Debug.Log("[Move] Entering Move State");
+            _timer = 0f;
+
             var targetPos = Context.MovementData.GetCurrentTargetPosition();
             if (targetPos.HasValue)
             {
                 Context.MovementComponent.StartMoving(targetPos.Value);
-                Debug.Log($"[Move] Started moving to {targetPos.Value}");
             }
         }
 
         public override void Update()
         {
+            _timer += Time.deltaTime;
+
+            if (_timer >= _updateInterval)
+            {
+                _timer = 0f;
+                
+                var targetPos = Context.MovementData.GetCurrentTargetPosition();
+                if (targetPos.HasValue)
+                {
+                    Context.MovementComponent.StartMoving(targetPos.Value);
+                }
+            }
+
             if (!Context.MovementComponent.IsMoving && Context.MovementComponent.HasPath)
             {
-                Debug.Log("[Move] Destination reached!");
                 Context.MovementData.Clear();
             }
         }
         
         public override void OnExit()
         {
-            Debug.Log("[Move] Exiting Move State");
         }
     }
 }

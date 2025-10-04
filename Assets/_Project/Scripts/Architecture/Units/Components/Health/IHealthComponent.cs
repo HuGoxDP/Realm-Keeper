@@ -1,4 +1,6 @@
-﻿namespace Architecture.Units.Components
+﻿using Architecture.Units.Core;
+
+namespace Architecture.Units.Components
 {
     public interface IHealthComponent : IComponent
     {

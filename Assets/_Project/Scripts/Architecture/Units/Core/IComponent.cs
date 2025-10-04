@@ -1,4 +1,4 @@
-﻿namespace Architecture.Units
+﻿namespace Architecture.Units.Core
 {
     public interface IComponent
     {

@@ -1,9 +1,11 @@
 ﻿using Architecture.Units.Components;
+using Architecture.Units.Configs;
 using Architecture.Units.Data;
+using Reflex.Attributes;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Architecture.Units
+namespace Architecture.Units.Core
 {
     public class BaseUnit : MonoBehaviour
     {
@@ -11,26 +13,31 @@ namespace Architecture.Units
         [SerializeField] private int _maxHealth = 15;
 
         [Header("Movement Settings")] 
-        [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private MovementSettings _movementSettings;
 
+        [Header("Components")]
+        [SerializeField] private UnitStateMachine _stateMachine;
+        [SerializeField] private UnitSelectionVisual _selectionVisual;
+        
+        private NavMeshAgent _navMeshAgent;
         private IMovementComponent _movementComponent;
         private IHealthComponent _healthComponent;
         
         private MovementData _movementData;
-
-
+        
+        [Inject] private IUnitManager _unitManager;
+        
         private void Awake()
         {
-            _movementData = new MovementData();
+            _unitManager.AddUnit(this);
+            _navMeshAgent = GetComponent<NavMeshAgent>();
             
+            _movementData = new MovementData();
             _movementComponent = new MovementComponent(_navMeshAgent, _movementSettings);
             _healthComponent = new HealthComponent(_maxHealth);
             
-            
             var context = new UnitContext(this, _movementData, _healthComponent, _movementComponent);
-            var unitStateMachine = GetComponent<UnitStateMachine>();
-            unitStateMachine.Initialize(context);
+            _stateMachine.Initialize(context);
         }
 
         private void OnEnable()
@@ -57,6 +64,9 @@ namespace Architecture.Units
         public void Heal(int amount) => _healthComponent?.Heal(amount);
         public void Kill() => _healthComponent?.Kill();
         public void Reset() => _healthComponent?.Reset();
+        
+        public void Select() => _selectionVisual?.Select();
+        public void Deselect() => _selectionVisual?.Deselect();
 
     }
 }

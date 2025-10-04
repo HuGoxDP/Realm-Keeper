@@ -27,6 +27,15 @@ namespace Architecture.DI
             
             var globalResourceStorage = new GlobalResourceStorage(_gameResourceList);
             containerBuilder.AddSingleton(globalResourceStorage, typeof(IGlobalResourceStorage));
+            
+            var unitManager = new UnitManager();
+            containerBuilder.AddSingleton(unitManager, typeof(IUnitManager));
+            
+            var unitSelectionSystem = FindFirstObjectByType<UnitSelectionSystem>();
+            containerBuilder.AddSingleton(unitSelectionSystem, typeof(IUnitSelectionSystem));
+            
+            Debug.Log("GameInstaller Installed");
         }
     }
+
 }

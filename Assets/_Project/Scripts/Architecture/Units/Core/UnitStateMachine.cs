@@ -2,7 +2,7 @@
 using Architecture.Units.State;
 using UnityEngine;
 
-namespace Architecture.Units
+namespace Architecture.Units.Core
 {
     public class UnitStateMachine : MonoBehaviour
     {

@@ -1,7 +1,7 @@
-﻿using Architecture.Units;
+﻿using Architecture.Units.Core;
 using UnityEngine;
 
-namespace Architecture
+namespace Architecture.Testing
 {
     public class TestDamageZone : MonoBehaviour
     { 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Architecture.Units.Core;
+using UnityEngine;
 
 namespace Architecture.Units.State
 {
@@ -8,8 +9,6 @@ namespace Architecture.Units.State
         
         public override void OnEnter()
         {
-            Debug.Log($"[Dead] Unit died! Health: {Context.HealthComponent.CurrentHealth}");
-            
             Context.MovementComponent.StopMoving();
             Context.MovementData.Clear();
   

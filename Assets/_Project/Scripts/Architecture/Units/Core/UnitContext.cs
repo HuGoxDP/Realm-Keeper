@@ -2,7 +2,7 @@
 using Architecture.Units.Components;
 using Architecture.Units.Data;
 
-namespace Architecture.Units
+namespace Architecture.Units.Core
 {
     public class UnitContext
     {

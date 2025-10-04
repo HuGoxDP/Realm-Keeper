@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Architecture.Units.Core;
+using UnityEngine;
 
 namespace Architecture.Units.State
 {
@@ -11,7 +12,6 @@ namespace Architecture.Units.State
         
         public override void OnEnter()
         {
-            Debug.Log("[Chase] Entering Chase State");
             _timer = 0f;
         }
 
@@ -43,7 +43,6 @@ namespace Architecture.Units.State
 
         public override void OnExit()
         {
-            Debug.Log("[Chase] Stopped chasing");
         }
     }
 }
