@@ -29,9 +29,15 @@ namespace Architecture.FSM
 
         public void SetState(IState state)
         {
-            var node = GetOrAddNode(state);
-            _current = node;
-            _current.State?.OnEnter();
+            if (state == _current?.State)
+                return;
+            
+            var previousState = _current?.State;
+            var nextStateNode = GetOrAddNode(state);
+            
+            previousState?.OnExit();
+            nextStateNode.State?.OnEnter();
+            _current = nextStateNode;
         }
 
         public void AddTransition(IState from, IState to, IPredicate condition)

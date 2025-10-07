@@ -6,26 +6,21 @@ using R3;
 using Reflex.Attributes;
 using UnityEngine;
 
-namespace Architecture
+namespace Architecture.Selection
 {
-    public interface IUnitSelectionSystem
+    public class SelectionSystem : MonoBehaviour, ISelectionSystem
     {
-        public event Action<List<BaseUnit>> OnSelectionChanged;
-    }
-
-    public class UnitSelectionSystem : MonoBehaviour, IUnitSelectionSystem
-    {
-        public event Action<List<BaseUnit>> OnSelectionChanged;
+        public event Action<List<ISelectable>> OnSelectionChanged;
         
         [SerializeField] private LayerMask _selectedLayerMask;
         [SerializeField] private RectTransform _boxVisual;
 
         private UnityEngine.Camera _camera;
         private IPlayerInputService _playerInputService;
-        private IUnitManager _unitManager;
+        private ISelectableRegistry _selectableRegistry;
         
-        private List<BaseUnit> _selectedUnits;
-        private List<BaseUnit> _units;        
+        private List<ISelectable> _selectedObjects;
+        private List<ISelectable> _selectableObjects;        
         private RaycastHit _hitInfo;
         
         private Vector3 _startPosition;
@@ -36,16 +31,19 @@ namespace Architecture
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
         [Inject]
-        private void Setup(UnityEngine.Camera mainCamera, IPlayerInputService playerInputService, IUnitManager unitManager)
+        private void Setup(UnityEngine.Camera mainCamera, IPlayerInputService playerInputService, ISelectableRegistry selectableRegistry)
         {
             _camera = mainCamera;
             _playerInputService = playerInputService;
-            _unitManager = unitManager;
+            _selectableRegistry = selectableRegistry;
         }
         private void Awake()
         {
-            _selectedUnits = new List<BaseUnit>();
-            _units = new List<BaseUnit>();
+            _selectedObjects = new List<ISelectable>();
+            _selectableObjects = new List<ISelectable>();
+            
+            _endPosition = Vector3.zero;
+            _startPosition = Vector3.zero;
         }
         private void Start()
         {
@@ -53,10 +51,8 @@ namespace Architecture
                 throw new ArgumentNullException(nameof(_camera), "Main Camera cannot be null");
             if (_playerInputService == null)
                 throw new ArgumentNullException(nameof(_playerInputService), "Player Input Service cannot be null");
-            
-            _units = new List<BaseUnit>();
-            _endPosition = Vector3.zero;
-            _startPosition = Vector3.zero;
+            if (_selectableRegistry == null)
+                throw new ArgumentNullException(nameof(_selectableRegistry), "Selectable Registry cannot be null");
             
             DrawVisual();
             
@@ -115,65 +111,66 @@ namespace Architecture
         }
         private void HandleSingleSelection(Vector3 position)
         {
-            var unitToAdd = SelectUnit(position);
-            if (unitToAdd == null)
+            var selectableToAdd = FindSelectableUnderMouse(position);
+            if (selectableToAdd == null)
                 return;
             
-            if (!_selectedUnits.Contains(unitToAdd))
+            if (!_selectedObjects.Contains(selectableToAdd))
             {
-                _selectedUnits.Add(unitToAdd);
-                unitToAdd.Select();
+                _selectedObjects.Add(selectableToAdd);
+                selectableToAdd.Select();
             }
             else
             {
-                Deselect(unitToAdd);
+                selectableToAdd.Deselect();
+                _selectedObjects.Remove(selectableToAdd);
             }
             
-            OnSelectionChanged?.Invoke(_selectedUnits);
+            OnSelectionChanged?.Invoke(_selectedObjects);
         }
         private void HandleDragSelection()
         {
-            SelectUnits();
-            if (_units.Count > 0)
+            FindSelectableObjectsInBox();
+            if (_selectableObjects.Count > 0)
             {
-                foreach (var unit in _units)
+                foreach (var selectable in _selectableObjects)
                 {
-                    if (!_selectedUnits.Contains(unit))
+                    if (!_selectedObjects.Contains(selectable))
                     {
-                        _selectedUnits.Add(unit);
-                        unit.Select();
+                        _selectedObjects.Add(selectable);
+                        selectable.Select();
                     }
                     else
                     {
-                        unit.Deselect();
-                        _selectedUnits.Remove(unit);
+                        selectable.Deselect();
+                        _selectedObjects.Remove(selectable);
                     }
                 }
                 
-                OnSelectionChanged?.Invoke(_selectedUnits);
+                OnSelectionChanged?.Invoke(_selectedObjects);
             }
         }
-        private void SelectUnits()
+        private void FindSelectableObjectsInBox()
         {
-            _units.Clear();
-            foreach (var unit in _unitManager.UnitList)
+            _selectableObjects.Clear();
+            foreach (var selectable in _selectableRegistry.AllSelectables)
             {
-                if (_selectionBox.Contains(_camera.WorldToScreenPoint(unit.transform.position)))
+                if (_selectionBox.Contains(_camera.WorldToScreenPoint(selectable.Transform.position)))
                 {
-                    _units.Add(unit);
+                    _selectableObjects.Add(selectable);
                 }
             }
         }
         
-        private BaseUnit SelectUnit(Vector3 position)
+        private ISelectable FindSelectableUnderMouse(Vector3 position)
         {
             var ray = _camera.ScreenPointToRay(position);
             if (Physics.Raycast(ray.origin, ray.direction, out _hitInfo, 100, _selectedLayerMask))
             {
-                var unit = _hitInfo.collider.GetComponent<BaseUnit>();
-                if (unit != null)
+                var selectable = _hitInfo.collider.GetComponent<ISelectable>();
+                if (selectable != null)
                 {
-                    return unit;
+                    return selectable;
                 }
             }
             return null;
@@ -202,6 +199,7 @@ namespace Architecture
                 _selectionBox.yMax = mousePosition.y;
             }
         }
+        
         private void DrawVisual()
         {
             Vector2 boxStart = _startPosition;
@@ -213,21 +211,13 @@ namespace Architecture
             Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y));
             _boxVisual.sizeDelta = boxSize;
         }
-        private void Deselect(BaseUnit unitToDeselect)
-        {
-            if (_selectedUnits.Contains(unitToDeselect))
-            {
-                unitToDeselect.Deselect();
-                _selectedUnits.Remove(unitToDeselect);
-            }
-        }
         private void DeselectAll()
         {
-            foreach (var unit in _selectedUnits)
+            foreach (var unit in _selectedObjects)
             {
                 unit.Deselect();
             }
-            _selectedUnits.Clear();
+            _selectedObjects.Clear();
         }
     }
 }

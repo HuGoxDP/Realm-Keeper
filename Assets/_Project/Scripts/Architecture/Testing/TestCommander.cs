@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Architecture.InputSystems;
+using Architecture.Selection;
 using Architecture.Units.Core;
 using R3;
 using Reflex.Attributes;
@@ -17,19 +18,27 @@ namespace Architecture.Testing
         
         [Inject] private IPlayerInputService _playerInputService;
         [Inject] private UnityEngine.Camera _camera;
-        [Inject] private IUnitSelectionSystem _unitSelectionSystem;
+        [Inject] private ISelectionSystem _selectionSystem;
         
         private CompositeDisposable _disposables = new CompositeDisposable();
 
         private void Awake()
         {
             _unit = new List<BaseUnit>();
-            _unitSelectionSystem.OnSelectionChanged += OnSelectionChanged;
+            _selectionSystem.OnSelectionChanged += OnSelectionChanged;
         }
 
-        private void OnSelectionChanged(List<BaseUnit> obj)
+        private void OnSelectionChanged(List<ISelectable> selectables)
         {
-            _unit = obj;
+            var units = new List<BaseUnit>();
+            foreach (var selectable in selectables)
+            {
+                if (selectable.GameObject.TryGetComponent(out BaseUnit unit))
+                {
+                    units.Add(unit);
+                }
+            }
+            _unit = units;
         }
 
         private void Start()

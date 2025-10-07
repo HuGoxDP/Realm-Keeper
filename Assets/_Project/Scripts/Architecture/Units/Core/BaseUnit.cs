@@ -1,4 +1,5 @@
-﻿using Architecture.Units.Components;
+﻿using Architecture.Selection;
+using Architecture.Units.Components;
 using Architecture.Units.Configs;
 using Architecture.Units.Data;
 using Reflex.Attributes;
@@ -9,15 +10,11 @@ namespace Architecture.Units.Core
 {
     public class BaseUnit : MonoBehaviour
     {
-        [Header("Health Settings")] 
-        [SerializeField] private int _maxHealth = 15;
-
-        [Header("Movement Settings")] 
-        [SerializeField] private MovementSettings _movementSettings;
+        [SerializeField] private HealthConfig _healthConfig;
+        [SerializeField] private MovementConfig _movementSettings;
 
         [Header("Components")]
         [SerializeField] private UnitStateMachine _stateMachine;
-        [SerializeField] private UnitSelectionVisual _selectionVisual;
         
         private NavMeshAgent _navMeshAgent;
         private IMovementComponent _movementComponent;
@@ -25,16 +22,13 @@ namespace Architecture.Units.Core
         
         private MovementData _movementData;
         
-        [Inject] private IUnitManager _unitManager;
-        
         private void Awake()
         {
-            _unitManager.AddUnit(this);
             _navMeshAgent = GetComponent<NavMeshAgent>();
             
             _movementData = new MovementData();
             _movementComponent = new MovementComponent(_navMeshAgent, _movementSettings);
-            _healthComponent = new HealthComponent(_maxHealth);
+            _healthComponent = new HealthComponent(_healthConfig);
             
             var context = new UnitContext(this, _movementData, _healthComponent, _movementComponent);
             _stateMachine.Initialize(context);
@@ -55,6 +49,7 @@ namespace Architecture.Units.Core
         private void OnDestroy()
         {
             _movementComponent?.Dispose();
+            _healthComponent?.Dispose();
         }
 
         public void MoveTo(Vector3 position) => _movementData.SetTarget(position);
@@ -64,9 +59,6 @@ namespace Architecture.Units.Core
         public void Heal(int amount) => _healthComponent?.Heal(amount);
         public void Kill() => _healthComponent?.Kill();
         public void Reset() => _healthComponent?.Reset();
-        
-        public void Select() => _selectionVisual?.Select();
-        public void Deselect() => _selectionVisual?.Deselect();
 
     }
 }

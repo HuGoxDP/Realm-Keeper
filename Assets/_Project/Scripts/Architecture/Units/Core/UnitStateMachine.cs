@@ -1,5 +1,7 @@
-﻿using Architecture.FSM;
+﻿using System;
+using Architecture.FSM;
 using Architecture.Units.State;
+using R3;
 using UnityEngine;
 
 namespace Architecture.Units.Core
@@ -8,6 +10,8 @@ namespace Architecture.Units.Core
     {
         private UnitContext _context;
         private StateMachine _fsm;
+        
+        private IDisposable _deathSubscription;
 
         private void Awake()
         {
@@ -24,6 +28,23 @@ namespace Architecture.Units.Core
 
             _context = context;
             InitializeStates();
+            SubscribeToEvents();
+        }
+
+        private void SubscribeToEvents()
+        {
+            _deathSubscription = _context.HealthComponent.OnDeath
+                .Subscribe(_ =>
+                {
+                    Debug.Log($"[{_context.Unit.name}] Death event received!");
+                    TransitionToDeadState();
+                });
+        }
+
+        private void TransitionToDeadState()
+        {
+            var deadState = new DeadUnitState(_context);
+            _fsm.SetState(deadState);
         }
 
         private void Update()
@@ -41,15 +62,18 @@ namespace Architecture.Units.Core
             var idleState = new IdleUnitState(_context);
             var moveState = new MoveUnitState(_context);
             var chaseState = new ChaseUnitState(_context);
-            var deadState = new DeadUnitState(_context);
 
             _fsm.AddTransition(idleState, moveState, new FuncPredicate(() => _context.MovementData.TargetPosition.HasValue));
             _fsm.AddTransition(idleState, chaseState, new FuncPredicate(() => _context.MovementData.TargetTransform != null));
             _fsm.AddTransition(moveState, idleState, new FuncPredicate(() => !_context.MovementData.HasMoveCommand));
             _fsm.AddTransition(chaseState, idleState, new FuncPredicate(() => !_context.MovementData.HasMoveCommand));
-            _fsm.AddAnyTransition(deadState, new FuncPredicate(() => _context.HealthComponent.IsDead));
             
             _fsm.SetState(idleState);
+        }
+        
+        private void OnDestroy()
+        {
+            _deathSubscription?.Dispose();
         }
     }
 }

@@ -7,20 +7,19 @@ namespace Architecture.Units.Components
     public class MovementComponent : IMovementComponent
     {
         private readonly NavMeshAgent _navMeshAgent;
-        private readonly MovementSettings _settings;
+        private readonly MovementConfig _config;
+        
         private bool _isEnabled;
-
-        public bool IsMoving => _navMeshAgent.hasPath
-                                && _navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance;
-
+        
+        public bool IsMoving => _navMeshAgent.hasPath && _navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance;
         public float RemainingDistance => _navMeshAgent.remainingDistance;
         public bool HasPath => _navMeshAgent.hasPath;
         public Vector3 Velocity => _navMeshAgent.velocity;
 
-        public MovementComponent(NavMeshAgent navMeshAgent, MovementSettings settings)
+        public MovementComponent(NavMeshAgent navMeshAgent, MovementConfig config)
         {
             _navMeshAgent = navMeshAgent;
-            _settings = settings;
+            _config = config;
 
             SetupNavMeshAgent();
         }
@@ -82,10 +81,10 @@ namespace Architecture.Units.Components
         
         private void SetupNavMeshAgent()
         {
-            _navMeshAgent.speed = _settings.moveSpeed;
-            _navMeshAgent.angularSpeed = _settings.rotationSpeed;
-            _navMeshAgent.stoppingDistance = _settings.stoppingDistance;
-            _navMeshAgent.autoBraking = _settings.autoBraking;
+            _navMeshAgent.speed = _config.MoveSpeed;
+            _navMeshAgent.angularSpeed = _config.RotationSpeed;
+            _navMeshAgent.stoppingDistance = _config.StoppingDistance;
+            _navMeshAgent.autoBraking = _config.AutoBraking;
         }
     }
 }

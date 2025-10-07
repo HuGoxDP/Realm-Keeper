@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6777547732411002346}
   - component: {fileID: 400408659741092818}
   - component: {fileID: 6016927466507501505}
-  - component: {fileID: 4661132955590198660}
   m_Layer: 7
   m_Name: SelectionVisual
   m_TagString: Untagged
@@ -87,18 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4661132955590198660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053325820868410100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef361e8815d49bc8cbbdb985b36aa34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4149409624089454894
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +185,9 @@ GameObject:
   - component: {fileID: 2314052525855636593}
   - component: {fileID: 7751461627786309236}
   - component: {fileID: 8670998230621400677}
-  - component: {fileID: 3030703985294787545}
+  - component: {fileID: 8746893155600185430}
+  - component: {fileID: 6640134811631903692}
+  - component: {fileID: 5426277804896550941}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -307,15 +296,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34494e3120b6405a94fdbb7e4a79c2c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 15
-  _movementSettings:
-    moveSpeed: 5
-    rotationSpeed: 120
-    stoppingDistance: 0.5
-    autoBraking: 1
-  _stateMachine: {fileID: 3030703985294787545}
-  _selectionVisual: {fileID: 4661132955590198660}
---- !u!114 &3030703985294787545
+  _healthConfig: {fileID: 11400000, guid: 97fcc44ab5cb8b0499db92b3ea3457eb, type: 2}
+  _movementSettings: {fileID: 11400000, guid: e82f36e57ebb88d4a8dfd128be8272ab, type: 2}
+  _stateMachine: {fileID: 5426277804896550941}
+--- !u!114 &8746893155600185430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4764588175462741698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd535225f304a6f9f3af6297518a130, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectionVisual: {fileID: 2053325820868410100}
+--- !u!114 &6640134811631903692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4764588175462741698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15c2d7f62b54fed895ab5be49a36c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _selectables: {fileID: 8746893155600185430}
+--- !u!114 &5426277804896550941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

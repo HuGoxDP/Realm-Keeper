@@ -1,5 +1,6 @@
 ﻿using Architecture.GameResources;
 using Architecture.InputSystems;
+using Architecture.Selection;
 using Reflex.Core;
 using UnityEngine;
 
@@ -28,11 +29,11 @@ namespace Architecture.DI
             var globalResourceStorage = new GlobalResourceStorage(_gameResourceList);
             containerBuilder.AddSingleton(globalResourceStorage, typeof(IGlobalResourceStorage));
             
-            var unitManager = new UnitManager();
-            containerBuilder.AddSingleton(unitManager, typeof(IUnitManager));
+            var unitSelectionSystem = FindFirstObjectByType<SelectionSystem>();
+            containerBuilder.AddSingleton(unitSelectionSystem, typeof(ISelectionSystem));
             
-            var unitSelectionSystem = FindFirstObjectByType<UnitSelectionSystem>();
-            containerBuilder.AddSingleton(unitSelectionSystem, typeof(IUnitSelectionSystem));
+            var selectableRegistry = new SelectableRegistry();
+            containerBuilder.AddSingleton(selectableRegistry, typeof(ISelectableRegistry));
             
             Debug.Log("GameInstaller Installed");
         }

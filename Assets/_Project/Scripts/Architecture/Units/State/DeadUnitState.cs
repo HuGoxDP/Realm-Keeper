@@ -9,10 +9,15 @@ namespace Architecture.Units.State
         
         public override void OnEnter()
         {
+            Debug.Log($"[{Context.Unit.name}] Entering Death State");
+            
             Context.MovementComponent.StopMoving();
             Context.MovementData.Clear();
+            
+            Context.MovementComponent.Disable();
+            Context.HealthComponent.Disable();
   
-            Object.Destroy(Context.Unit.gameObject, 2);
+            Object.Destroy(Context.Unit.gameObject, 0.5f);
         }
     }
 }
